@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'maven-publish'
 }
 
 group = 'iwo.wintech'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     toolchain {
@@ -21,26 +21,33 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    implementation 'org.springframework.security:spring-security-config'
-    implementation 'org.springframework.security:spring-security-web'
-    implementation 'org.springframework.boot:spring-boot-autoconfigure'
-    implementation 'org.springframework:spring-context'
-    implementation 'org.springframework:spring-core'
-    implementation 'jakarta.annotation:jakarta.annotation-api'
-    implementation 'jakarta.servlet:jakarta.servlet-api'
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation libs.bundles.spring.libs
+    implementation libs.bundles.jakarta.libs
+    implementation libs.bundles.jjwt.libs
+    compileOnly libs.project.lombok
+    annotationProcessor libs.project.lombok
+    testImplementation libs.spring.security.test
+    testImplementation libs.spring.boot.starter.test
+    testRuntimeOnly libs.junit.platform
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'iwo.wintech'
+            artifactId = project.name
+            version = project.version.toString()
+
+            from components.java
+
+        }
+    }
 }

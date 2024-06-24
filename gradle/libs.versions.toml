@@ -1,0 +1,50 @@
+[versions]
+jwt_version = "0.12.5"
+jakarta_servlet_version = "6.1.0"
+jakarta_annotation_version = "3.0.0"
+spring_security_config = "6.3.1"
+spring_boot = "3.3.1"
+spring_version = "6.1.10"
+lombok_version = "1.18.32"
+junit_platform = "1.10.2"
+
+[libraries]
+jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jwt_version"}
+jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jwt_version"}
+jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jwt_version"}
+
+
+
+jakarta-servlet-api = { module = "jakarta.servlet:jakarta.servlet-api", version.ref = "jakarta_servlet_version"}
+jakarta-annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jakarta_annotation_version"}
+
+spring-security-config = { module = "org.springframework.security:spring-security-config", version.ref = "spring_security_config" }
+spring-security-test = { module = "org.springframework.security:spring-security-test", version.ref = "spring_security_config" }
+spring-security-web = { module = "org.springframework.security:spring-security-web", version.ref = "spring_security_config" }
+spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring_boot" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring_boot" }
+spring-context = { module = "org.springframework:spring-context", version.ref = "spring_version" }
+spring-core = { module = "org.springframework:spring-core", version.ref = "spring_version" }
+
+project-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok_version" }
+junit-platform = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit_platform" }
+
+[bundles]
+jjwt-libs = [
+    "jjwt-api",
+    "jjwt-impl",
+    "jjwt-jackson"
+]
+
+jakarta-libs = [
+    "jakarta-servlet-api",
+    "jakarta-annotation-api"
+]
+
+spring-libs = [
+    "spring-security-config",
+    "spring-security-web",
+    "spring-boot-autoconfigure",
+    "spring-context",
+    "spring-core"
+]
