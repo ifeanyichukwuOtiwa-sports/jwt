@@ -11,7 +11,7 @@ A simple library which provides the necessary JWT configuration for securing you
 2. Clone repo: `git clone https://github.com/ifeanyichukwuOtiwa-sports/jwt.git`
 3. Enter and hit `cd jwt`
 4. Enter and hit `./gradlew clean build publishMavenJavaPublicationToMavenLocal`
-7. Declare the library as a dependency in your pom.xml or build.gradle (using the above group id, artifact id and version).
+5. Declare the library as a dependency in your pom.xml or build.gradle (using the above group id, artifact id and version).
 ```build.gradle
 implementation 'iwo.wintech:jwt:0.0.1-SNAPSHOT'
 ```
@@ -24,8 +24,8 @@ or
     </dependency>
 ```
 
-8. Add this to your MAIN Configuration class (above @Configuration): `@Import(JWTConfig.class)`
-9. Declare values for these properties: `jwt.secretKey`, `jwt.lifeTimeMillis`, and `jwt.issuer` in your application.properties file.
+1. Add this to your MAIN Configuration class (above @Configuration): `@Import(JWTConfig.class)`
+2. Declare values for these properties: `jwt.secretKey`, `jwt.lifeTimeMillis`, and `jwt.issuer` in your application.properties file.
 
 ### ***EXAMPLE***
 
@@ -77,8 +77,12 @@ public class SecurityConfig {
     }
 }
 ```
+
+
 **NOTE**:
 1. Only suitable for learning environments (until It is hosted on Maven Central).
 
 Modified version of [From divad1998](https://github.com/divad1998/jwt)] 
+
+
 Example with old version from [@tericcabrel](https://medium.com/@tericcabrel/implement-jwt-authentication-in-a-spring-boot-3-application-5839e4fd8fac)
