@@ -7,16 +7,13 @@ import iwo.wintech.jwt.api.JWTObjectParser;
 import iwo.wintech.jwt.api.JWTService;
 import iwo.wintech.jwt.api.JWTSubject;
 import iwo.wintech.jwt.api.dto.TokenResponse;
-import iwo.wintech.jwt.main.security.SecureUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @RequiredArgsConstructor

@@ -1,7 +1,5 @@
 package iwo.wintech.jwt.api;
 
-import iwo.wintech.jwt.main.model.AccessRole;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -55,7 +53,7 @@ public interface JWTSubject {
      *
      * @return the roles of the subject as a Set of AccessRole objects
      */
-    Set<AccessRole> getRoles();
+    Set<String> getRoles();
 
     /**
      * Default implementation of the {@code canEqual} method.
