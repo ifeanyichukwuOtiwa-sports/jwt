@@ -1,0 +1,14 @@
+jwt:
+  issuer: "iwo.wintech.ventures"
+  life-time-millis: 72000000
+  secret-key: ${SECRET_KEY}
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:6033/jjwt_db}
+    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database: mysql

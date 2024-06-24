@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'maven-publish'
+    id 'org.springframework.boot' version '3.3.1'
 }
 
 group = 'iwo.wintech'
@@ -28,6 +29,10 @@ dependencies {
     implementation libs.bundles.spring.libs
     implementation libs.bundles.jakarta.libs
     implementation libs.bundles.jjwt.libs
+    implementation libs.spring.boot.starter.data.jpa
+    implementation libs.spring.boot.starter.web
+    implementation libs.mysql
+
     compileOnly libs.project.lombok
     annotationProcessor libs.project.lombok
     testImplementation libs.spring.security.test

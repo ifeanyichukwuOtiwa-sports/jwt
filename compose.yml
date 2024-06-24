@@ -1,0 +1,8 @@
+services:
+  jjwt-mysql:
+    image: mysql:8.4.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=jjwt_db
+    ports:
+      - 6033:3306
