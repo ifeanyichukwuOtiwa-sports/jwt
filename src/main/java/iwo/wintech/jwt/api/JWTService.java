@@ -1,7 +1,12 @@
 package iwo.wintech.jwt.api;
 
+import iwo.wintech.jwt.api.dto.TokenResponse;
+
+import java.time.LocalDateTime;
+
 public interface JWTService {
-    String createToken(String username);
-    String extractUserEmailFromToken(String jwtToken);
-    boolean isTokenValid(String jwtToken, String username);
+    TokenResponse createToken(JWTSubject username);
+    JWTSubject extractUserEmailFromToken(String jwtToken);
+    boolean isTokenValid(String jwtToken, JWTSubject username);
+    LocalDateTime getExpiration(final String jwtToken);
 }

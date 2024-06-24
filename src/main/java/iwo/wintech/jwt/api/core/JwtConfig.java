@@ -1,6 +1,9 @@
-package iwo.wintech.jwt.api;
+package iwo.wintech.jwt.api.core;
 
 import io.jsonwebtoken.Jwts;
+import iwo.wintech.jwt.api.JWTObjectParser;
+import iwo.wintech.jwt.api.JWTService;
+import iwo.wintech.jwt.api.JWTSubject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +18,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class JwtConfig {
 
     @Bean
-    public JWTService jwtService(final JwtProperties properties) {
-        return new JWTServiceImpl(properties);
+    public JWTService jwtService(final JwtProperties properties, final JWTObjectParser<JWTSubject> parser) {
+        return new JWTServiceImpl(properties, parser);
     }
 
     @Bean
