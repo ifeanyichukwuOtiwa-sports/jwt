@@ -1,8 +1,6 @@
 package iwo.wintech.jwt.main.security;
 
 import iwo.wintech.jwt.api.JWTSubject;
-import iwo.wintech.jwt.main.model.AccessPermission;
-import iwo.wintech.jwt.main.model.AccessRole;
 import iwo.wintech.jwt.main.model.AccountUser;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,10 +16,11 @@ import java.util.UUID;
 public class SecureUser implements UserDetails, JWTSubject {
     private final String username;
     private final String password;
-    private final Set<AccessRole> roles;
+    private final Set<String> roles;
     private final String name;
     private final UUID id;
     private final String email;
+    private final Set<String> permissions;
 
     public SecureUser(final AccountUser user) {
         this.username = user.getUsername();
@@ -29,13 +29,12 @@ public class SecureUser implements UserDetails, JWTSubject {
         this.name = user.getName();
         this.id = user.getId();
         this.email = user.getEmail();
+        this.permissions = user.getUserPermissions();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .flatMap(r -> r.getUserPermissions().stream())
-                .map(AccessPermission::getPermission)
+        return this.permissions.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }
@@ -46,8 +45,8 @@ public class SecureUser implements UserDetails, JWTSubject {
     }
 
     @Override
-    public Set<AccessRole> getRoles() {
-        return Set.of();
+    public Set<String> getRoles() {
+        return new HashSet<>(this.roles);
     }
 
     @Override

@@ -18,6 +18,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -45,4 +46,18 @@ public class AccountUser implements JWTSubject {
 
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private Set<AccessRole> roles;
+
+    @Override
+    public Set<String> getRoles() {
+        return roles.stream()
+               .map(AccessRole::getRole)
+               .collect(Collectors.toSet());
+    }
+
+    public Set<String> getUserPermissions() {
+        return roles.stream()
+               .flatMap(r -> r.getUserPermissions().stream())
+               .map(AccessPermission::getPermission)
+               .collect(Collectors.toSet());
+    }
 }
