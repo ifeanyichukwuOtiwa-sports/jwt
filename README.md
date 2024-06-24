@@ -48,9 +48,12 @@ public class AuthService {
                         .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         
                 if( auth != null ){
-                    AccountUser user = userRepository.findByUsername(request.getUsername());
-                    String token = jwtService.createToken(user);
-                    return new ResponseEntity<>(LoginResponse.builder().user(user).token(token).build(), HttpStatus.OK);
+                    JWTSubject user = userRepository.findByUsername(request.getUsername());
+                    TokenResponse token = jwtService.createToken(user);
+                    return new ResponseEntity<>(LoginResponse.builder().email(user.email())
+                            .token(token.token())
+                            .expiration(tokem.expiration())
+                            .build(), HttpStatus.OK);
                 }
                 return null;
         }
@@ -59,21 +62,40 @@ public class AuthService {
 
 @Configuration
 public class SecurityConfig {
-    
+
 
     @Bean
-    public SecurityFilterChain securityFilterChain(final HttpSecurity customSecurity, final JWTFilter jwtFilter) throws Exception{
-
-        return customSecurity
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http,
+                                                   final JWTFilter jwtFilter) throws Exception {
+        log.info("Security filter chain configured");
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(requestRegistry -> requestRegistry
-                    .requestMatchers("/api/users/register", "/api/users/login", "/path/to/ignore/..").permitAll()
-                    .requestMatchers("/api/users/all").hasAnyAuthority(Role.ADMIN.name())
-                    .anyRequest().authenticated())
+                .authorizeHttpRequests(r -> r.requestMatchers(
+                                        "/api/v1/auth/register",
+                                        "/api/v1/auth/login"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(final AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public Function<String, String> passwordEncodeFunction() {
+        return passwordEncoder()::encode;
     }
 }
 ```
